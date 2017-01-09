@@ -4,13 +4,12 @@
 2. Clone this repo. `git clone https://github.com/Ouwen/kage.git`
 3. Run `docker-compose up --build`
 This will build containers and setup volumes for the database.
-The api service will not run because the databases do not start in time.
+4. Test the running service at `https://localhost/core/v1.0.0/`. 
 
-4. Run `docker-compose down` then run `docker-compose up` again.
-This will restart containers and the database containers will start before
-the api service. A fix will be made in the future.
+5. (optional) Since the nginx proxy is using a self-signed certificate, your browser may give a warning that the site is 'untrusted'. Add the certificate in `/proxy/certificates` to the browser's trusted list. This step varies from browser to browser.
 
-# License MIT
+
+## License MIT
 
 Copyright (c) 2016 Ouwen Huang, contributors
 

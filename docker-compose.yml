@@ -16,14 +16,14 @@ services:
     volumes:
       - "./api/server:/usr/src/server"
       - "./api/Gruntfile.js:/usr/src/Gruntfile.js"
-      - "/usr/src/node_modules"
+      - "./api/wait-for-postgres.sh:/usr/src/wait-for-postgres.sh"
     ports:
       - "3000:3000"
     links:
       - "db_test"
       - "db_development"
       - "db_production"
-    command: grunt
+    command: ["dockerize", "-wait", "tcp://db_development:5432", "grunt"]
 
   db_test:
     image: postgres
@@ -59,7 +59,7 @@ services:
       - 5402:5432
 
   proxy:
-    image: nginx
+    build: ./proxy
     ports:
       - "443:443"
       - "8080:8080"
@@ -68,6 +68,7 @@ services:
       - "./proxy/certificates/:/etc/nginx/ssl"
     links:
       - "api"
+    command: ["dockerize", "-wait", "http://api:3000", "nginx"]
 
 volumes:
   db_test_volume:
