@@ -23,7 +23,7 @@ services:
       - "db_test"
       - "db_development"
       - "db_production"
-    command: ["dockerize", "-wait", "tcp://db_development:5432", "grunt"]
+    command: ["dockerize", "-wait", "tcp://db_development:5432", "-timeout", "20s", "grunt"]
 
   db_test:
     image: postgres
@@ -68,7 +68,7 @@ services:
       - "./proxy/certificates/:/etc/nginx/ssl"
     links:
       - "api"
-    command: ["dockerize", "-wait", "http://api:3000", "nginx"]
+    command: ["dockerize", "-wait", "http://api:3000", "-timeout", "30s", "nginx"]
 
 volumes:
   db_test_volume:
